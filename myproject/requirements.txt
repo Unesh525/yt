@@ -1,3 +1,5 @@
-git add requirements.txt
-git commit -m "Update requirements.txt with packages"
-git push origin main
+Django>=4.0,<5.0
+gunicorn
+psycopg2-binary
+whitenoise
+dj-database-url
