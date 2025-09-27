@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>US  - YouTube Downloader </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .hero { background: linear-gradient(90deg,#0d6efd22,#6f42c122); }
+        .file-size { font-size: .9rem; color: #6c757d; }
+        .badge-format { font-weight:600; }
+        .round-card { border-radius: .75rem; }
+        .download-btn { min-width: 120px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Us Download <small class="text-muted">YouTube</small></a>
+        <div>
+            <small class="text-muted">Free YouTube to MP3/MP4 converter</small>
+        </div>
+    </div>
+</nav>
+
+<header class="hero py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="card p-4 round-card shadow-sm">
+                    <h3 class="mb-3">Download Youtube Video on MP3 & MP4 Online Free</h3>
+                    <p class="mb-3">Paste a YouTube link below and choose the format/resolution you want. Fast, clean
+                        and without limitations.</p>
+
+                    <form class="row g-2" action="..//" method="POST">
+                        {% csrf_token %}
+                        <div class="col-sm-9">
+                            <label for="ytUrl" class="visually-hidden">YouTube URL</label>
+                            <input id="ytUrl" type="text" class="form-control"
+                               {% if url %} value="{{url}}" {% endif %}   placeholder="Enter The Link"  name="url" required>
+                        </div>
+                        <div class="col-sm-3 d-grid">
+
+                            <input class="btn btn-primary" type="submit" value="Convert">
+
+                        </div>
+                    </form>
+
+                    <div class="mt-4">
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-success">Fast and easy to use</span>
+                            <span class="badge bg-secondary">Safe and Clean</span>
+                            <span class="badge bg-info text-dark">Full format support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if title %}
+            <div class="col-md-4 mt-3 mt-md-0">
+                <div class="card round-card shadow-sm">
+                    <img src='{{thumbnail}}' class="card-img-top"
+                         alt="Video thumbnail">
+                    <div class="card-body">
+                        <h5 class="card-title">{{title}}</h5>
+                        <p class="file-size mb-1">{{duration}}</p>
+                        <div class="d-grid gap-2">
+                            <a href="{{url}}" class="btn btn-outline-primary">Open on YouTube</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+        </div>
+    </div>
+</header>
+{% if msg %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg text-center p-4" style="max-width: 400px; border-radius: 20px;">
+        <div class="card-body">
+            <div class="mb-3">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+            </div>
+
+                <h2 class="text-success">{{ msg }}</h2>
+
+
+
+            <a href="/" class="btn btn-primary mt-3">Go Back</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<main class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card p-3 round-card shadow-sm">
+                {% if video_size %}
+                <h5 class="mb-3">Available Downloads</h5>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                        <tr>
+                            <th>Video</th>
+                            <th>FileSize</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1080p (.mp4)</td>
+                            <td class="file-size">{{ video_size }}</td>
+                            <td class="text-end">
+                                <form action="../downloadmp4/" method="POST">
+
+                                    {% csrf_token %}
+                                    <input type="hidden" name="url" value="{{url}}">
+                                    <input class="btn btn-outline-success download-btn" type="submit" value="Download">
+                                </form>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                        <tr>
+                            <th>Audio</th>
+                            <th>FileSize</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>360p (.mp3)</td>
+                            <td class="file-size">{{audio_size}}</td>
+                            <td class="text-end">
+                                <form action="../downloadmp3/" method="POST">
+
+                                    {% csrf_token %}
+                                    <input type="hidden" name="url" value="{{url}}">
+                                    <input class="btn btn-outline-success download-btn" type="submit" value="Download">
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr>
+
+            </div>
+            {% endif %}
+
+            <hr>
+            <h6>How to download YouTube MP4 & MP3</h6>
+            <ol>
+                <li>Paste the YouTube link into the input box above.</li>
+                <li>Select the MP4 or MP3 format you want.</li>
+                <li>Click the download button to save the file to your device.</li>
+            </ol>
+
+        </div>
+
+
+        <div class="card mt-4 p-3 round-card shadow-sm">
+            <h5>Questions and Answers</h5>
+            <div class="mt-3">
+                <p><strong>Is Yt1s Downloader a free service?</strong><br>Yes, Yt1s Downloader is a free online
+                    YouTube video downloader.</p>
+                <p><strong>Are there any limitations on video length?</strong><br>Yt1s Downloader allows users to
+                    download YouTube videos of any duration.</p>
+                <p><strong>Can I download videos in HD?</strong><br>Yes — multiple video quality options are
+                    provided including MP4 and WebM.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <aside class="col-lg-4">
+        <div class="card p-3 round-card shadow-sm">
+            <h6>Features</h6>
+            <ul>
+                <li>Fast and easy to use</li>
+                <li>Without limitation</li>
+                <li>Safe and Clean</li>
+                <li>Cloud support</li>
+            </ul>
+        </div>
+
+        <div class="card mt-3 p-3 round-card shadow-sm">
+            <h6>Formats Supported</h6>
+            <p>MP4, MP3, M4A, WEBM, 3GP</p>
+        </div>
+    </aside>
+    </div>
+</main>
+
+<footer class="bg-white border-top py-3">
+    <div class="container d-flex justify-content-between">
+        <div>© 2025 usdownload.onrender.com <h6> <a style="text-decoration:none;" href="https://umeshkumarmeghwal.netlify.app"> Developed by Umesh Kumar Meghwal Kota</a></h6></div>
+
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
